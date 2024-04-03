@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:frontend_delivery_app/services/authentication_service.dart';
 import 'package:frontend_delivery_app/views/widgets/buttons/register_button.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -12,45 +12,37 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
+  final AuthenticationService _authService = AuthenticationService();
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
 
-  void _trySubmitForm() {
-    print('Trying to submit form');
+  void _trySubmitForm() async {
     final isValid = _formKey.currentState!.validate();
-    print('Is form valid? $isValid'); // Depuración para verificar si el formulario es válido
-    
     FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState!.save();
-      print('Form saved'); // Confirma que el estado del formulario se ha guardado
-      print('Password: $_password');
-      print('Confirm Password: $_confirmPassword');
 
       if (_password != _confirmPassword) {
-        print('Passwords do not match'); // Depuración adicional en caso de que las contraseñas no coincidan
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Passwords do not match.'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
+          SnackBar(content: const Text('Passwords do not match.'), backgroundColor: Theme.of(context).colorScheme.error),
         );
-        return; // Sale temprano si las contraseñas no coinciden
+        return;
       }
 
-      // Si las contraseñas coinciden, utiliza Firebase Authentication para registrar al usuario
-      FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _email.trim(),
-        password: _password.trim(),
-      ).then((userCredential) {
-        // TODO: Manejar el registro exitoso
-        print('User registered successfully');
-      }).catchError((error) {
-        // TODO: Manejar errores, como email ya en uso
-        print('Error registering user: $error');
-      });
+      bool result = await _authService.createUser(_email, _password);
+      if (!result) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          // ignore: use_build_context_synchronously
+          SnackBar(content: const Text('Failed to register.'), backgroundColor: Theme.of(context).colorScheme.error),
+        );
+      } else {
+        // Aquí puedes redirigir al usuario o manejar el éxito del registro como prefieras
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacementNamed('/home'); 
+      }
     }
   }
 
@@ -60,7 +52,7 @@ class _RegisterFormState extends State<RegisterForm> {
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           TextFormField(
             key: const ValueKey('email'),
             validator: (value) {
@@ -90,7 +82,6 @@ class _RegisterFormState extends State<RegisterForm> {
               if (value == null || value.isEmpty) {
                 return 'Confirm password is required.';
               }
-              // No es necesario comparar aquí, ya que lo hacemos después del save
               return null;
             },
             onSaved: (value) => _confirmPassword = value ?? '',

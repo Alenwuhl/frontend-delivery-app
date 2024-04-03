@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/views/screens/register_screen.dart';
-import 'services/category.service.dart';
+import 'services/category_service.dart';
 import 'config/firebase/firebase_options.dart';
 
 void main() async {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "74669897934",
+    "project_id": "futuristic-delivery-app",
+    "storage_bucket": "futuristic-delivery-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74669897934:android:b49c8ccd1bdce92463b89f",
+        "android_client_info": {
+          "package_name": "com.example.frontend_delivery_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3J_tM1CTOSlgqp6VrywZIygVNPp2Bldw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

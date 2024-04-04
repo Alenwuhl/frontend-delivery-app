@@ -42,9 +42,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.frontend_delivery_app"
-        
-        minSdkVersion 19
+        applicationId 'com.example.frontend_delivery_app'
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -65,4 +64,5 @@ flutter {
 
 dependencies {
         implementation platform('com.google.firebase:firebase-bom:32.8.0')
+        implementation 'com.facebook.android:facebook-login:latest.release'
 }

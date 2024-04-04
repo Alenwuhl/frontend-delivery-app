@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">Futuristic delivery App</string>
+    <string name="facebook_app_id">359132750414767</string>
+    <string name="fb_login_protocol_scheme">fb359132750414767</string>
+    <string name="facebook_client_token">21f70a9fe9fbc713398ac849757a1211</string>
+</resources>

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_delivery_app/views/widgets/buttons/social_sign_in_button.dart';
 import 'package:frontend_delivery_app/views/widgets/forms/register_form.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -10,11 +11,20 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Register'),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: SingleChildScrollView(
-            child: RegisterForm(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: RegisterForm(),
+                ),
+                SocialSignInButtons(),
+              ],
+            ),
           ),
         ),
       ),

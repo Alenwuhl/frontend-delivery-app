@@ -39,9 +39,8 @@ class _RegisterFormState extends State<RegisterForm> {
           SnackBar(content: const Text('Failed to register.'), backgroundColor: Theme.of(context).colorScheme.error),
         );
       } else {
-        // Aquí puedes redirigir al usuario o manejar el éxito del registro como prefieras
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacementNamed('/home'); 
+        Navigator.of(context).pushReplacementNamed('/login'); 
       }
     }
   }

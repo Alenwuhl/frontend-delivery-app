@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/services/authentication_service.dart';
-
+import 'package:frontend_delivery_app/views/widgets/forms/forms_styles.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -15,72 +15,96 @@ class _LoginFormState extends State<LoginForm> {
   String _email = '';
   String _password = '';
 
-Future<void> _tryLogin() async {
-  final isValid = _formKey.currentState?.validate() ?? false;
-  print('1');
-  if (!isValid) return;
-  print('2');
-  
-  _formKey.currentState?.save();
-  print('3');
-  try {
-    bool loggedIn = await AuthenticationService().signInWithEmailPassword(_email, _password);
-    print('4');
-    String? token = await AuthenticationService().getToken();
-    print('5');
-    print(token);
-    if (loggedIn) {
-
-      Navigator.of(context).pushReplacementNamed('/categories');
-    } else {
+  Future<void> _tryLogin() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+    _formKey.currentState?.save();
+    try {
+      bool loggedIn = await AuthenticationService()
+          .signInWithEmailPassword(_email, _password);
+      if (loggedIn) {
+        Navigator.of(context).pushReplacementNamed('/timer');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login failed. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login failed. Please try again.'),
+        SnackBar(
+          content: Text('An error occurred: $e'),
           backgroundColor: Colors.red,
         ),
       );
     }
-  } catch (e) {
-    print(e);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('An error occurred: $e'),
-        backgroundColor: Colors.red,
-      ),
-    );
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            decoration: const InputDecoration(labelText: 'Email'),
-            validator: (value) {
-              if (value == null || value.isEmpty || !value.contains('@')) {
-                return 'Please enter a valid email.';
-              }
-              return null;
-            },
-            onSaved: (value) => _email = value ?? '',
+      child: Container(
+        decoration: containerDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                decoration: inputDecoration.copyWith(
+                  labelText: 'Email ',
+                  hintText: 'Email',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty || !value.contains('@')) {
+                    return 'Please enter a valid email.';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _email = value ?? '',
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: inputDecoration.copyWith(
+                  labelText: 'Password',
+                  hintText: 'Password',
+                ),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.length < 6) {
+                    return 'Password must be at least 6 characters long.';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _password = value ?? '',
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(
+                  height: 20),
+                  
+              Container(
+                  decoration: gradientButtonDecoration,
+                  child: ElevatedButton(
+                    onPressed: _tryLogin,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(255, 252, 255, 0.53),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 95, vertical: 18),
+                    ),
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 5, 5, 5), fontSize: 16),
+                    ),
+                  ))
+            ],
           ),
-          TextFormField(
-            decoration: const InputDecoration(labelText: 'Password'),
-            obscureText: true,
-            validator: (value) {
-              if (value == null || value.isEmpty || value.length < 6) {
-                return 'Password must be at least 6 characters long.';
-              }
-              return null;
-            },
-            onSaved: (value) => _password = value ?? '',
-          ),
-          ElevatedButton(onPressed: _tryLogin, child: const Text('Login'))
-        ],
+        ),
       ),
     );
   }

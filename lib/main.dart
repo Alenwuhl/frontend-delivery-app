@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_delivery_app/views/screens/register_screen.dart';
 import './routes.dart';
 import 'config/firebase/firebase_options.dart';
 
@@ -17,17 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Categories'),
-        ),
-        body: const RegisterScreen(),
-      ),
-      initialRoute: '/login',
+    return const MaterialApp(
+      title: 'Futuristic delivery App',
+      initialRoute: '/', 
       onGenerateRoute: generateRoute,
     );
   }
 }
+
 

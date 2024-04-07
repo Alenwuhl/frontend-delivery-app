@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend_delivery_app/services/authentication_service.dart';
 
 class SocialSignInButtons extends StatelessWidget {
@@ -12,28 +11,41 @@ class SocialSignInButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        IconButton(
-          icon: const FaIcon(FontAwesomeIcons.google),
-          onPressed: () async {
-            // Llama a tu método para iniciar sesión con Google
+        _buildSocialButton(
+          context,
+          imagePath: 'assets/images/social_icons/google_icon.png', 
+          onTap: () async {
             await GoogleAuthenticationService.signInWithGoogle();
           },
         ),
-        IconButton(
-          icon: const FaIcon(FontAwesomeIcons.facebook),
-          onPressed: () async {
-            // Llama a tu método para iniciar sesión con Facebook
+        _buildSocialButton(
+          context,
+          imagePath: 'assets/images/social_icons/facebook_icon.png', 
+          onTap: () async {
             await authService.signInWithFacebook();
           },
         ),
-      //   IconButton(
-      //     icon: FaIcon(FontAwesomeIcons.twitter),
-      //     onPressed: () async {
-      //       // Llama a tu método para iniciar sesión con Twitter
-      //       await authService.signInWithTwitter();
-      //     },
-      //   ),
+         _buildSocialButton(
+          context,
+          imagePath: 'assets/images/social_icons/twitter_icon.png', 
+          onTap: () async {},
+        ),
       ],
+    );
+  }
+
+  Widget _buildSocialButton(BuildContext context, {required String imagePath, required VoidCallback onTap}) {
+    double size = MediaQuery.of(context).size.width * 0.12;
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Image.asset(imagePath),
+        ),
+      ),
     );
   }
 }

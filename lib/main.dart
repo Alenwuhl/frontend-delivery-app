@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Futuristic delivery App',
-      initialRoute: '/', 
+      initialRoute: '/categories', 
       onGenerateRoute: generateRoute,
     );
   }

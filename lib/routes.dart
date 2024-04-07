@@ -14,9 +14,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case '/register':
       return MaterialPageRoute(builder: (_) => const RegisterScreen());
     case '/categories':
-      return MaterialPageRoute(builder: (_) => CategoriesList());
+      return MaterialPageRoute(builder: (_) => CategoriesScreen());
     case '/timer':
-      return MaterialPageRoute(builder: (_) => TimerScreen());
+      return MaterialPageRoute(builder: (_) => const TimerScreen());
     default:
       return MaterialPageRoute(
         builder: (_) => Scaffold(

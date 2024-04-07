@@ -11,7 +11,6 @@ class RegisterScreen extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // Establece las proporciones deseadas
     const double topPaddingRatio = 0.25; 
     const double sidePaddingRatio = 0.1; 
     const double betweenElementsRatio = 0.03;

@@ -33,12 +33,15 @@ dependencies:
   http: ^1.2.1
   cupertino_icons: ^1.0.6
   firebase_core: ^2.28.0
+  firebase_storage: ^11.7.0
   firebase_auth: ^4.19.0
   font_awesome_flutter: ^10.7.0
   google_sign_in: ^6.2.1
   # twitter_login: ^4.4.2
   flutter_facebook_auth: ^6.1.1
   shared_preferences: ^2.2.2
+  cloud_firestore: ^4.16.0
+  flutter_img: ^0.1.6+148
 
 dev_dependencies:
   flutter_test:

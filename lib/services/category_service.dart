@@ -3,7 +3,7 @@ import 'dart:convert';
 
 //Get all categories
 class CategoryService {
-  static const String baseUrl = 'http://192.168.68.108:3000/api/categories';
+  static const String baseUrl = 'http://192.168.68.108:3000/api/categories/';
 
   Future<List<dynamic>>? getCategories() async {
     var response = await http.get(Uri.parse(baseUrl));

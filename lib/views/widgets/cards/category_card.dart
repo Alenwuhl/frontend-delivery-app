@@ -7,12 +7,12 @@ class CategoryCard extends StatelessWidget {
   final Function(BuildContext, String) onTap; // Corrected the onTap type here
 
   const CategoryCard({
-    Key? key,
+    super.key,
     required this.id,
     required this.title,
     required this.imageUrl,
     required this.onTap, // No need for a wrapper function here
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

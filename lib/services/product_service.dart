@@ -4,7 +4,7 @@ import 'dart:convert';
 //Get all products for a specific category
 class ProductService {
   // Base de la URL, sin incluir el path específico de la categoría
-  static const String baseApiUrl = '192.168.68.108:3000';
+  static const String baseApiUrl = '192.168.68.105:3000';
   static const String baseApiPath = '/api/products';
 
   // Función para obtener productos por categoría

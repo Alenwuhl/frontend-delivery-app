@@ -71,6 +71,10 @@ flutter:
     - assets/images/social_icons/twitter_icon.png
     - assets/images/background_images/x_donut.png
     - assets/images/background_images/donut.png
+    - assets/images/background_images/0_donut.png
+    - assets/images/payment_images/payment_1.png
+    - assets/images/payment_images/payment_2.png
+    - assets/images/payment_images/pay_here.png
     - assets/images/logo.png
     - assets/images/loader.png
     - assets/images/cupon_image.png

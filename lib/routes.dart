@@ -4,6 +4,7 @@ import 'package:frontend_delivery_app/views/screens/register_screen.dart';
 import 'package:frontend_delivery_app/views/screens/categories_screen.dart';
 import 'package:frontend_delivery_app/views/screens/home_screen.dart';
 import 'package:frontend_delivery_app/views/screens/timer_screen.dart';
+import 'package:frontend_delivery_app/views/screens/payment_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -15,6 +16,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const RegisterScreen());
     case '/categories':
       return MaterialPageRoute(builder: (_) => CategoriesScreen());
+    case '/payment':
+      return MaterialPageRoute(builder: (_) => PaymentScreen());
     case '/timer':
       return MaterialPageRoute(builder: (_) => const TimerScreen());
     default:

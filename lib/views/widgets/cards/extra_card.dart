@@ -4,13 +4,15 @@ class ExtraCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final void Function() onIconTap; // Añadir un callback para manejar el onTap del icono
 
   const ExtraCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
-  }) : super(key: key);
+    required this.onIconTap, // Añadir un parámetro para el callback
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +20,15 @@ class ExtraCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // Add onTap functionality here if needed
+        // Aquí se puede añadir funcionalidad adicional al onTap de la tarjeta si es necesario
       },
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Container(
-          width: screenWidth * 0.4, // 40% of screen width
+        child: SizedBox(
+          width: screenWidth * 0.4, // 40% del ancho de la pantalla
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -67,13 +69,25 @@ class ExtraCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '\$$price',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // Centra el contenido
+                  children: [
+                    Text(
+                      '\$$price',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 10), // Espaciado entre el precio y el icono
+                    GestureDetector(
+                      onTap: onIconTap, // Usa el callback aquí
+                      child: const Icon(
+                        Icons.add_box_outlined, // Icono de +
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

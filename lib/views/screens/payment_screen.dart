@@ -13,6 +13,7 @@ class _PaymentScreenState extends State<PaymentScreen>
   late AnimationController _animationController;
   late Animation<Offset> _donut1Animation;
   late Animation<Offset> _donut2Animation;
+  late Animation<Offset> _donut3Animation;
   bool _imageTappedOnce = false;
 
   @override
@@ -23,21 +24,39 @@ class _PaymentScreenState extends State<PaymentScreen>
       duration: const Duration(milliseconds: 500),
     );
 
-_donut1Animation = Tween<Offset>(
-  begin: const Offset(1.0, -1.0), // Comienza desde la parte superior derecha (x positiva, y negativa)
-  end: const Offset(-1.0, 1.0), // Termina en la parte inferior izquierda (x negativa, y positiva)
+    _donut1Animation = Tween<Offset>(
+      begin: const Offset(1.0, 3.0), // La dona comienza en su posición original
+      end: const Offset(
+          0.8, 0.8), // Mueve la dona de abajo derecha a arriba derecha
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+_donut2Animation = Tween<Offset>(
+  begin: const Offset(-0.7, 0.0), // Empieza ligeramente fuera de la pantalla por la izquierda
+  end: const Offset(-0.3, 0.0), // Se mueve hacia la derecha pero sigue en la parte superior
 ).animate(
   CurvedAnimation(
     parent: _animationController,
-    curve: Curves.easeInOut, // Este es el tipo de interpolación de la animación, puedes cambiarla como desees
+    curve: Curves.easeInOut,
+  ),
+);
+
+_donut3Animation = Tween<Offset>(
+  begin: const Offset(-1.0, 4.0), // Comienza fuera de la pantalla, abajo a la izquierda
+  end: const Offset(0.0, 4.0), // Termina mucho más abajo de la pantalla, abajo a la izquierda
+).animate(
+  CurvedAnimation(
+    parent: _animationController,
+    curve: Curves.easeInOut,
   ),
 );
 
 
-    _donut2Animation = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(-1.0, 0.0),
-    ).animate(_animationController);
+
   }
 
   void _onTap() {
@@ -54,7 +73,9 @@ _donut1Animation = Tween<Offset>(
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final centralImageSize = screenWidth * 0.3; // Example size, 30% of screen width
+    final screenHeight = MediaQuery.of(context).size.height;
+    final centralImageSize =
+        screenWidth * 0.4; // Example size, 40% of screen width
 
     return Scaffold(
       body: Stack(
@@ -62,16 +83,28 @@ _donut1Animation = Tween<Offset>(
           const BackgroundStyle(useRadialGradient: true),
           SlideTransition(
             position: _donut1Animation,
-            child: Image.asset('assets/images/background_images/donut.png'),
+            child: Positioned(
+              top: 0,
+              right: 0,
+              child: Image.asset('assets/images/background_images/donut.png'),
+            ),
           ),
           SlideTransition(
             position: _donut2Animation,
-            child: Image.asset('assets/images/background_images/0_donut.png'),
+            child: Positioned(
+              left: 0,
+              top: 0,
+              child: Image.asset('assets/images/background_images/0_donut.png'),
+            ),
           ),
-          if (_imageTappedOnce)
-            Positioned(
+          SlideTransition(
+            position: _donut3Animation,
+            child: Positioned(
+              left: 0,
+              bottom: 0,
               child: Image.asset('assets/images/background_images/x_donut.png'),
             ),
+          ),
           GestureDetector(
             onTap: _onTap,
             child: Center(
@@ -80,13 +113,13 @@ _donut1Animation = Tween<Offset>(
                 child: _imageTappedOnce
                     ? Image.asset(
                         'assets/images/payment_images/payment_2.png',
-                        key: const ValueKey('central2'),
+                        key: const ValueKey('payment2'),
                         width: centralImageSize,
                         height: centralImageSize,
                       )
                     : Image.asset(
                         'assets/images/payment_images/payment_1.png',
-                        key: const ValueKey('central1'),
+                        key: const ValueKey('payment1'),
                         width: centralImageSize,
                         height: centralImageSize,
                       ),

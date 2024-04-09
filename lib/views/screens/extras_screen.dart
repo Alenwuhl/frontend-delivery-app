@@ -80,7 +80,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                               child: ExtraCard(
                                 imageUrl: extra['imageUrl'],
                                 title: extra['title'],
-                                price: extra['price'].toString(),
+                                price: extra['price'].toString(), onIconTap: () {  },
                               ),
                             );
                           },

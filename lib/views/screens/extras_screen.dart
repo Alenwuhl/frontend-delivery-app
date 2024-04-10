@@ -1,20 +1,28 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:frontend_delivery_app/models/cart_model.dart';
 import 'package:frontend_delivery_app/services/extras_service.dart';
+import 'package:frontend_delivery_app/views/screens/cart_screen.dart';
+import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/extra_card.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/product_banner.dart';
+import 'package:provider/provider.dart'; // Importa Provider para acceder al CartProvider
 
 class ExtrasScreen extends StatefulWidget {
   final String productId;
   final String productTitle;
   final String productImageUrl;
+  final double productPrice;
 
   const ExtrasScreen({
-    Key? key,
+    super.key,
     required this.productId,
     required this.productTitle,
     required this.productImageUrl,
-  }) : super(key: key);
+    required this.productPrice,
+  });
 
   @override
   _ExtrasScreenState createState() => _ExtrasScreenState();
@@ -22,6 +30,8 @@ class ExtrasScreen extends StatefulWidget {
 
 class _ExtrasScreenState extends State<ExtrasScreen> {
   late final ExtrasService _extrasService;
+  List<String> selectedExtras = [];
+  List<String> selectedExtrasTitles = [];
 
   @override
   void initState() {
@@ -43,14 +53,14 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
               children: [
                 Container(
                   margin: EdgeInsets.only(
-                    top: screenHeight * 0.1, 
+                    top: screenHeight * 0.1,
                     left: 15.0,
                     right: 15.0,
                   ),
                   child: ProductBanner(
                     imageUrl: widget.productImageUrl,
                     title: widget.productTitle,
-                    height: screenHeight * 0.25, // Adjust the height as needed
+                    height: screenHeight * 0.25,
                   ),
                 ),
                 Expanded(
@@ -80,7 +90,13 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                               child: ExtraCard(
                                 imageUrl: extra['imageUrl'],
                                 title: extra['title'],
-                                price: extra['price'].toString(), onIconTap: () {  },
+                                price: extra['price'].toString(),
+                                onIconTap: () {
+                                  setState(() {
+                                    selectedExtras.add(extra['id']);
+                                    selectedExtrasTitles.add(extra['title']);
+                                  });
+                                },
                               ),
                             );
                           },
@@ -91,30 +107,108 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                     },
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20.0),
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/payment_images/pay_here.png', // Ruta de la imagen en tus assets
-                        width: 100, // Ancho de la imagen
-                        height: 100, // Alto de la imagen
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        final cartProvider =
+                            Provider.of<CartProvider>(context, listen: false);
+                        cartProvider.addCartItem(
+                          CartItem(
+                            cartItemId: Random().nextInt(1000000),
+                            productId: widget.productId,
+                            productTitle: widget.productTitle,
+                            productImageUrl: widget.productImageUrl,
+                            productPrice: widget.productPrice,
+                            selectedExtras: selectedExtras,
+                            selectedExtrasTitles: selectedExtrasTitles,
+                          ),
+                        );
+                        print('####################################');
+                        print('####################################');
+                        print('####################################');
+                        cartProvider.cartItemsList.forEach((cartItem) {
+                          print('Product ID: ${cartItem.productId}');
+                          print('Product Title: ${cartItem.productTitle}');
+                          print(
+                              'Product Image URL: ${cartItem.productImageUrl}');
+                          print('Product Price: ${cartItem.productPrice}');
+                          print('Selected Extras: ${cartItem.selectedExtras}');
+                          print(
+                              'Selected Extras Titles: ${cartItem.selectedExtrasTitles}');
+                          print('------------------------');
+                        });
+                        print('####################################');
+                        print('####################################');
+                        print('####################################');
+                        if (cartProvider.cartItemsList.isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CartScreen(), // Asegúrate de pasar cualquier argumento necesario aquí
+                            ),
+                          );
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/payment_images/pay_here.png',
+                            width: 100,
+                            height: 100,
+                          ),
+                          const Text(
+                            'Pay Here',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ],
                       ),
-                      const Text(
-                        'Pay Here',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        ),
+                    ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        final cartProvider =
+                            Provider.of<CartProvider>(context, listen: false);
+                        cartProvider.addAndReturnToPreviousPage(
+                          context,
+                          CartItem(
+                            cartItemId: Random().nextInt(1000000),
+                            productId: widget.productId,
+                            productTitle: widget.productTitle,
+                            productImageUrl: widget.productImageUrl,
+                            productPrice: widget.productPrice,
+                            selectedExtras: selectedExtras,
+                            selectedExtrasTitles: selectedExtrasTitles,
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/payment_images/buy_continue.png',
+                            width: 100,
+                            height: 100,
+                          ),
+                          const Text(
+                            'Continue Shopping',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

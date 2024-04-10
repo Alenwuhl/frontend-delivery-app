@@ -7,12 +7,12 @@ class ExtraCard extends StatelessWidget {
   final void Function() onIconTap; // Añadir un callback para manejar el onTap del icono
 
   const ExtraCard({
-    super.key,
+    Key? key,
     required this.imageUrl,
     required this.title,
     required this.price,
     required this.onIconTap, // Añadir un parámetro para el callback
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

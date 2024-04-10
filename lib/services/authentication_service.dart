@@ -11,11 +11,21 @@ class AuthenticationService {
   // Method to create a user with email and password
   Future<bool> createUser(String email, String password) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
+      // get the token
+      String? token = await userCredential.user?.getIdToken();
 
+      // get the uderId
+      String userId = userCredential.user?.uid ?? '';
+
+      // Save user information for future cart
+      if (token != null) {
+        await _saveUserData(email, token, userId);
+      }
       print('User registered successfully');
       return true;
     } on FirebaseAuthException catch (e) {
@@ -24,7 +34,7 @@ class AuthenticationService {
         return false;
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
-         return false;
+        return false;
       }
     } catch (e) {
       print('Error registering user: $e');
@@ -41,10 +51,15 @@ class AuthenticationService {
         email: email.trim(),
         password: password.trim(),
       );
+      // get the token
       String? token = await userCredential.user?.getIdToken();
-      print(token);
+
+      // get the uderId
+      String userId = userCredential.user?.uid ?? '';
+
+      // Save user information for future cart
       if (token != null) {
-        await _saveToken(token);
+        await _saveUserData(email, token, userId);
       }
       return true;
     } on FirebaseAuthException catch (e) {
@@ -53,7 +68,7 @@ class AuthenticationService {
         return false;
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
-         return false;
+        return false;
       }
     } catch (e) {
       print('Error registering user: $e');
@@ -62,20 +77,32 @@ class AuthenticationService {
     return false;
   }
 
-  Future<void> _saveToken(String token) async {
+  // Method to save the information on sharedPreferences
+  Future<void> _saveUserData(String email, String token, String userId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_email', email);
     await prefs.setString('auth_token', token);
+    await prefs.setString('user_id', userId);
   }
 
+  //Method to get the token
   Future<String?> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('auth_token');
+  }
+
+  // Method to get userId
+  Future<String?> getUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_id');
   }
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');
+    await prefs.remove('user_email');
+    await prefs.remove('user_id');
   }
 
   // Method to sign in with Facebook

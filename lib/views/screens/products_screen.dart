@@ -1,4 +1,3 @@
-// products_screen.dart
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/services/product_service.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
@@ -31,7 +30,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     _productService = ProductService();
   }
 
-    void handleProductTap(String productId, String imageUrl, String title) {
+    void handleProductTap(String productId, String imageUrl, String title, double price) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -39,6 +38,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           productId: productId,
           productTitle: title,
           productImageUrl: imageUrl,
+          productPrice: price,
         ),
       ),
     );
@@ -134,6 +134,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 product['id'], // Assuming 'id' is the key for productId in your data model
                                 product['imageUrl'],
                                 product['title'],
+                                product['price'],
                               ),
                             ));
                           },

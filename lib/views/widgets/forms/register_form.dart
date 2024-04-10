@@ -44,7 +44,7 @@ class _RegisterFormState extends State<RegisterForm> {
         );
       } else {
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacementNamed('/login');
+        Navigator.of(context).pushReplacementNamed('/categories');
       }
     }
   }

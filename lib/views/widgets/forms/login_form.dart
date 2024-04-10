@@ -23,7 +23,7 @@ class _LoginFormState extends State<LoginForm> {
       bool loggedIn = await AuthenticationService()
           .signInWithEmailPassword(_email, _password);
       if (loggedIn) {
-        Navigator.of(context).pushReplacementNamed('/timer');
+        Navigator.of(context).pushReplacementNamed('/categories');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

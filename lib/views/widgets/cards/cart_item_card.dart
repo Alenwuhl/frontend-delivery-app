@@ -45,7 +45,7 @@ class CartItemCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    '\$${cartItem.productPrice.toStringAsFixed(2)}',
+                    '\$${cartItem.cartItemPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w500,
@@ -66,14 +66,20 @@ class CartItemCard extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.add, color: Colors.green),
-                  onPressed: () {},
-                  //onPressed: onAdd,
+                  onPressed: () {
+                    cartProvider.modifyCartItemQuantity(cartItem.cartItemId, 1);
+                  },
                 ),
-                Text('$quantity'), // Muestra la cantidad actual
+                Text('${cartItem.quantity}'), // Muestra la cantidad actual
                 IconButton(
                   icon: const Icon(Icons.remove, color: Colors.red),
-                  onPressed: () {},
-                  //onPressed: onRemove,
+                  onPressed: () {
+                    if (cartItem.quantity > 1) {
+                      // Asegurarse de que no puedes tener menos de 1
+                      cartProvider.modifyCartItemQuantity(
+                          cartItem.cartItemId, -1);
+                    }
+                  },
                 ),
               ],
             ),

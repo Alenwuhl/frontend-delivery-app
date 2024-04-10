@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/models/cart_model.dart';
 import 'package:frontend_delivery_app/services/extras_service.dart';
@@ -32,6 +31,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
   late final ExtrasService _extrasService;
   List<String> selectedExtras = [];
   List<String> selectedExtrasTitles = [];
+  List<double> selectedExtrasPrices = [];
 
   @override
   void initState() {
@@ -95,6 +95,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                                   setState(() {
                                     selectedExtras.add(extra['id']);
                                     selectedExtrasTitles.add(extra['title']);
+                                    selectedExtrasPrices.add(extra['price']);
                                   });
                                 },
                               ),
@@ -123,25 +124,9 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                             productPrice: widget.productPrice,
                             selectedExtras: selectedExtras,
                             selectedExtrasTitles: selectedExtrasTitles,
+                            selectedExtrasPrices: selectedExtrasPrices,
                           ),
                         );
-                        print('####################################');
-                        print('####################################');
-                        print('####################################');
-                        cartProvider.cartItemsList.forEach((cartItem) {
-                          print('Product ID: ${cartItem.productId}');
-                          print('Product Title: ${cartItem.productTitle}');
-                          print(
-                              'Product Image URL: ${cartItem.productImageUrl}');
-                          print('Product Price: ${cartItem.productPrice}');
-                          print('Selected Extras: ${cartItem.selectedExtras}');
-                          print(
-                              'Selected Extras Titles: ${cartItem.selectedExtrasTitles}');
-                          print('------------------------');
-                        });
-                        print('####################################');
-                        print('####################################');
-                        print('####################################');
                         if (cartProvider.cartItemsList.isNotEmpty) {
                           Navigator.push(
                             context,
@@ -184,6 +169,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                             productPrice: widget.productPrice,
                             selectedExtras: selectedExtras,
                             selectedExtrasTitles: selectedExtrasTitles,
+                            selectedExtrasPrices: selectedExtrasPrices,
                           ),
                         );
                       },

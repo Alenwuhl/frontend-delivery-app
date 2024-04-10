@@ -48,26 +48,43 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                   Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Implementa la funcionalidad para finalizar la compra
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.blue,
-                          backgroundColor: Colors.white,
+                    child: Column(
+                      mainAxisSize: MainAxisSize
+                          .min, // Esto centra el contenido de la columna verticalmente
+                      children: [
+                        Consumer<CartProvider>(
+                          builder: (context, cartProvider, child) {
+                            return Text(
+                              'Total: \$${cartProvider.totalAmount.toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          },
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: Text(
-                            'Finalize purchase',
-                            style: TextStyle(
-                              fontSize: 20.0,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Implementa la funcionalidad para finalizar la compra
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: Text(
+                                'Finalize purchase',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],

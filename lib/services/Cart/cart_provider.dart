@@ -55,4 +55,9 @@ class CartProvider extends ChangeNotifier {
     double get totalAmount {
     return _cartItemsList.fold(0.0, (total, current) => total + current.cartItemPrice);
   }
+
+    void clearCart() {
+    _cartItemsList.clear(); // Esto elimina todos los elementos de la lista de cartItems.
+    notifyListeners(); // Notificar a los oyentes para que la UI pueda actualizarse.
+  }
 }

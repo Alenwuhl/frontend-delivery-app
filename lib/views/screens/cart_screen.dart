@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_delivery_app/services/order_service.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
@@ -64,26 +65,73 @@ class CartScreen extends StatelessWidget {
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Implementa la funcionalidad para finalizar la compra
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.blue,
-                              backgroundColor: Colors.white,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(14.0),
-                              child: Text(
-                                'Finalize purchase',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                final cartProvider = Provider.of<CartProvider>(
+                                    context,
+                                    listen: false);
+                                final orderService = OrderService();
+                                try {
+                                  final response =
+                                      await orderService.createOrder(
+                                    cartProvider.cartItemsList,
+                                    cartProvider.totalAmount,
+                                  );
+                                  if (response.statusCode == 200) {
+                                    // En caso de éxito, limpiar el carrito.
+                                    cartProvider.clearCart();
+                                    // Navegar a la pantalla de pago.
+                                    Navigator.of(context)
+                                        .pushReplacementNamed('/payment');
+                                  } else {
+                                    // En caso de error, mostrar un mensaje.
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Error'),
+                                          content: const Text(
+                                              'There was an error placing the order. Please try again.'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('Close'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
+                                } catch (e) {
+                                  // En caso de excepción, mostrar un mensaje.
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: Text(
+                                            'An unexpected error occurred: $e'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text('Close'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: null,
+                              
+                              
+                              // Resto de la definición del botón...
+                            )),
                       ],
                     ),
                   ),

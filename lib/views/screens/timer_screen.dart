@@ -9,7 +9,7 @@ class TimerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Random number between 5 and 10
-    int randomTimeInSeconds = (Random().nextInt(6) + 5) * 60;
+    int randomTimeInSeconds = (Random().nextInt(1) + 3) * 60;
 
     return Scaffold(
       body: Stack(

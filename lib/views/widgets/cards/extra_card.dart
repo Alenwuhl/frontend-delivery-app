@@ -4,33 +4,35 @@ class ExtraCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
-  final void Function() onIconTap; // Añadir un callback para manejar el onTap del icono
+  final void Function() onIconTap;
+  final bool isSelected;
 
   const ExtraCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
-    required this.onIconTap, // Añadir un parámetro para el callback
-  }) : super(key: key);
+    required this.onIconTap,
+    this.isSelected = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      onTap: () {
-        // Aquí se puede añadir funcionalidad adicional al onTap de la tarjeta si es necesario
-      },
+      onTap: () {},
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         child: SizedBox(
-          width: screenWidth * 0.4, // 40% del ancho de la pantalla
+          width: screenWidth * 0.4,
+          height: screenHeight * 0.5,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Stack(

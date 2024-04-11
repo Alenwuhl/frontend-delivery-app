@@ -57,7 +57,7 @@ class CartProvider extends ChangeNotifier {
   }
 
     void clearCart() {
-    _cartItemsList.clear(); // Esto elimina todos los elementos de la lista de cartItems.
-    notifyListeners(); // Notificar a los oyentes para que la UI pueda actualizarse.
+    _cartItemsList.clear(); 
+    notifyListeners(); 
   }
 }

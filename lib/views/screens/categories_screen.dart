@@ -13,6 +13,7 @@ class CategoriesScreen extends StatelessWidget {
 
   void handleCategoryTap(
       BuildContext context, String id, String title, String imageUrl) {
+        
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -28,8 +29,7 @@ class CategoriesScreen extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     double topPadding = screenHeight * 0.05;
-    double titleFontSize = screenHeight * 0.04;
-    double leftPadding = screenWidth * 0.1;
+    double titleFontSize = screenHeight * 0.05;
     double gridSpacing = screenHeight * 0.015;
     double cardWidth = screenWidth * 0.5;
     double cardAspectRatio = 1 / 1;
@@ -68,7 +68,7 @@ class CategoriesScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: leftPadding,
+              left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               top: topPadding + MediaQuery.of(context).padding.top,
             ),

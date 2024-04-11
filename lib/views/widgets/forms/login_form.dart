@@ -33,7 +33,6 @@ class _LoginFormState extends State<LoginForm> {
         );
       }
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('An error occurred: $e'),

@@ -7,7 +7,8 @@ import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/extra_card.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/product_banner.dart';
-import 'package:provider/provider.dart'; // Importa Provider para acceder al CartProvider
+import 'package:frontend_delivery_app/views/widgets/cards/selected_extras_widget.dart';
+import 'package:provider/provider.dart';
 
 class ExtrasScreen extends StatefulWidget {
   final String productId;
@@ -32,6 +33,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
   List<String> selectedExtras = [];
   List<String> selectedExtrasTitles = [];
   List<double> selectedExtrasPrices = [];
+  List<String> selectedExtrasImages = [];
 
   @override
   void initState() {
@@ -44,6 +46,8 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    double titleFontSize = screenHeight * 0.05;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -51,6 +55,21 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
           SafeArea(
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Text(
+                    'You can order now',
+                    style: TextStyle(
+                      fontSize: titleFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SelectedExtrasWidget(
+                  selectedExtrasImages: selectedExtrasImages,
+                  selectedExtrasTitles: selectedExtrasTitles,
+                  screenHeight: screenHeight * 0.2,
+                ),
                 Container(
                   margin: EdgeInsets.only(
                     top: screenHeight * 0.1,
@@ -60,7 +79,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                   child: ProductBanner(
                     imageUrl: widget.productImageUrl,
                     title: widget.productTitle,
-                    height: screenHeight * 0.25,
+                    height: screenHeight * 0.15,
                   ),
                 ),
                 Expanded(
@@ -80,26 +99,32 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: screenWidth * 0.03,
                             mainAxisSpacing: screenHeight * 0.0,
-                            childAspectRatio: 0.9,
+                            childAspectRatio: 1.2,
                           ),
                           itemCount: extras.length,
                           itemBuilder: (context, index) {
                             var extra = extras[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ExtraCard(
-                                imageUrl: extra['imageUrl'],
-                                title: extra['title'],
-                                price: extra['price'].toString(),
-                                onIconTap: () {
-                                  setState(() {
-                                    selectedExtras.add(extra['id']);
-                                    selectedExtrasTitles.add(extra['title']);
-                                    selectedExtrasPrices.add(extra['price']);
-                                  });
-                                },
-                              ),
-                            );
+                            if (!selectedExtras.contains(extra['id'])) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ExtraCard(
+                                  imageUrl: extra['imageUrl'],
+                                  title: extra['title'],
+                                  price: extra['price'].toString(),
+                                  onIconTap: () {
+                                    setState(() {
+                                      selectedExtras.add(extra['id']);
+                                      selectedExtrasTitles.add(extra['title']);
+                                      selectedExtrasPrices.add(extra['price']);
+                                      selectedExtrasImages
+                                          .add(extra['imageUrl']);
+                                    });
+                                  },
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
                           },
                         );
                       } else {
@@ -108,8 +133,8 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                     },
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
                       onTap: () {

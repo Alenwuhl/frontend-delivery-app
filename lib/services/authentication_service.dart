@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 // For Google sign-in
 import 'package:google_sign_in/google_sign_in.dart';
 // For Facebook sign-in
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:twitter_login/entity/auth_result.dart';
+// For X sign-in
+import 'package:twitter_login/twitter_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationService {
@@ -106,17 +111,65 @@ class AuthenticationService {
   }
 
   // Method to sign in with Facebook
-  Future<bool> signInWithFacebook() async {
+  // Future<bool> signInWithFacebook() async {
+  //   try {
+  //     final LoginResult loginResult =
+  //       await FacebookAuth.instance.login(permissions: ["email"]);
+  //     if (loginResult.status != LoginStatus.success) return false;
+  //     final OAuthCredential facebookAuthCredential =
+  //       FacebookAuthProvider.credential(loginResult.accessToken!.token);
+  //     await _firebaseAuth.signInWithCredential(facebookAuthCredential);
+  //     return true;
+  //   } catch (e) {
+  //     print('Error signing in with Facebook: $e');
+  //     return false;
+  //   }
+  // }
+
+  // Method to sign in with Twitter
+  Future<bool> signInWithTwitter() async {
     try {
-      final LoginResult loginResult =
-          await FacebookAuth.instance.login(permissions: ["email"]);
-      if (loginResult.status != LoginStatus.success) return false;
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
-      await _firebaseAuth.signInWithCredential(facebookAuthCredential);
-      return true;
+      final TwitterLogin twitterLogin = TwitterLogin(
+        apiKey: 'hPvSInVdAWGnRgg7h3Ph0OMju',
+        apiSecretKey: 'G8yQ6gWKaW0EH4zEzjSMaoHP1lqitwfV0hkJgzAXNYGB02gEML',
+        redirectURI: 'socialAuth://'//'https://futuristic-delivery-app.firebaseapp.com/__/auth/handler'
+      );
+
+      final AuthResult authResult = await twitterLogin.loginV2();
+      if (authResult.status == TwitterLoginStatus.loggedIn) {
+        try{
+          final AuthCredential credential = TwitterAuthProvider.credential(
+          accessToken: authResult.authToken!,
+          secret: authResult.authTokenSecret!,
+        );
+        await _firebaseAuth.signInWithCredential(credential);
+        return true;
+        }catch(e){
+          print("este try");
+          print(e);
+        }
+      } else {
+        print(authResult.status);
+      }
+  // switch (authResult.status) {
+  //               case TwitterLoginStatus.loggedIn:
+  //                 print('1');
+  //                 break;
+  //               case TwitterLoginStatus.cancelledByUser:
+  //               print('2');
+  //                 // cancel
+  //                 break;
+  //               case TwitterLoginStatus.error:
+  //               print('3');
+  //                 // error
+  //                 break;
+  //               default:
+  //               print('4');
+  //             }
+
+      return false;
     } catch (e) {
-      print('Error signing in with Facebook: $e');
+      print('Error signing in with Twitter: $e');
       return false;
     }
   }

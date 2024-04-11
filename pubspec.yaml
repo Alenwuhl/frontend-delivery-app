@@ -37,7 +37,7 @@ dependencies:
   firebase_auth: ^4.19.0
   font_awesome_flutter: ^10.7.0
   google_sign_in: ^6.2.1
-  # twitter_login: ^4.4.2
+  twitter_login: ^4.4.2
   flutter_facebook_auth: ^6.1.1
   shared_preferences: ^2.2.2
   cloud_firestore: ^4.16.0

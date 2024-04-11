@@ -10,13 +10,32 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Usa Provider.of para acceder a CartProvider en la jerarquía de widgets.
     final cartProvider = Provider.of<CartProvider>(context);
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Stack(
         children: [
           const BackgroundStyle(useRadialGradient: false),
+          Positioned(
+            right: -screenWidth * 0.25,
+            bottom: screenHeight * 0.1,
+            child: Image.asset(
+              'assets/images/background_images/donut.png',
+              width: screenWidth * 0.5,
+              height: screenHeight * 0.5,
+            ),
+          ),
+          Positioned(
+            right: screenWidth * 0.3,
+            top: screenHeight * 0.05,
+            child: Image.asset(
+              'assets/images/background_images/x_donut.png',
+              width: screenWidth * 1.4,
+              height: screenHeight * 1.6,
+            ),
+          ),
           Center(
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -127,10 +146,7 @@ class CartScreen extends StatelessWidget {
                                   );
                                 }
                               },
-                              child: null,
-                              
-                              
-                              // Resto de la definición del botón...
+                              child: const Text('Confirm and pay'),
                             )),
                       ],
                     ),

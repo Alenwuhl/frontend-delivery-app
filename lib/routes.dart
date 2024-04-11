@@ -17,7 +17,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case '/categories':
       return MaterialPageRoute(builder: (_) => CategoriesScreen());
     case '/payment':
-      return MaterialPageRoute(builder: (_) => PaymentScreen());
+      return MaterialPageRoute(builder: (_) => const PaymentScreen());
     case '/timer':
       return MaterialPageRoute(builder: (_) => const TimerScreen());
     default:

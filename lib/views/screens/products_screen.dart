@@ -30,7 +30,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
     _productService = ProductService();
   }
 
-    void handleProductTap(String productId, String imageUrl, String title, double price) {
+  void handleProductTap(
+      String productId, String imageUrl, String title, double price) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -88,7 +89,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 // Category banner with image and title
                 Container(
                   margin: EdgeInsets.only(
-                    top: screenHeight * 0.2, 
+                    top: screenHeight * 0.2,
                     left: 15.0,
                     right: 15.0,
                   ),
@@ -125,18 +126,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           itemBuilder: (context, index) {
                             var product = snapshot.data![index];
                             return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ProductCard(
-                                imageUrl: product['imageUrl'],
-                                title: product['title'],
-                                price: product['price'],                               
-                              onTap: () => handleProductTap(
-                                product['id'], // Assuming 'id' is the key for productId in your data model
-                                product['imageUrl'],
-                                product['title'],
-                                product['price'],
-                              ),
-                            ));
+                                padding: const EdgeInsets.all(8.0),
+                                child: ProductCard(
+                                  imageUrl: product['imageUrl'],
+                                  title: product['title'],
+                                  price: product['price'],
+                                  onTap: () => handleProductTap(
+                                    product[
+                                        'id'], // Assuming 'id' is the key for productId in your data model
+                                    product['imageUrl'],
+                                    product['title'],
+                                    product['price'],
+                                  ),
+                                ));
                           },
                         );
                       } else {

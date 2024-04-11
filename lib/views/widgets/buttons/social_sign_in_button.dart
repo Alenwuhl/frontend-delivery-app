@@ -22,13 +22,16 @@ class SocialSignInButtons extends StatelessWidget {
           context,
           imagePath: 'assets/images/social_icons/facebook_icon.png', 
           onTap: () async {
-            await authService.signInWithFacebook();
+           // await authService.signInWithFacebook();
           },
         ),
          _buildSocialButton(
           context,
           imagePath: 'assets/images/social_icons/twitter_icon.png', 
-          onTap: () async {},
+          onTap: () async {
+            var authService = AuthenticationService();
+            await authService.signInWithTwitter();
+          },
         ),
       ],
     );

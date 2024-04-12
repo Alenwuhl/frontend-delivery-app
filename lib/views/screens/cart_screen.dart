@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/services/order_service.dart';
+import 'package:frontend_delivery_app/views/widgets/buttons/go_back_button.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
@@ -18,6 +19,11 @@ class CartScreen extends StatelessWidget {
       body: Stack(
         children: [
           const BackgroundStyle(useRadialGradient: false),
+          const Positioned(
+            top: 20, 
+            left: 20,
+            child: BackButtonWidget(),
+          ),
           Positioned(
             right: -screenWidth * 0.25,
             bottom: screenHeight * 0.1,
@@ -45,7 +51,8 @@ class CartScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.only(top: 60,
+                    bottom: 40),
                     child: Text(
                       "This is your order",
                       style: TextStyle(
@@ -99,7 +106,7 @@ class CartScreen extends StatelessWidget {
                                   );
                                   if (response.statusCode == 200) {
                                     // En caso de éxito, limpiar el carrito.
-                                    cartProvider.clearCart();
+                                   // cartProvider.clearCart();
                                     // Navegar a la pantalla de pago.
                                     Navigator.of(context)
                                         .pushReplacementNamed('/payment');

@@ -5,6 +5,7 @@ import 'package:frontend_delivery_app/services/extras_service.dart';
 import 'package:frontend_delivery_app/views/screens/cart_screen.dart';
 import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
+import 'package:frontend_delivery_app/views/widgets/buttons/go_back_button.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/extra_card.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/product_banner.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/selected_extras_widget.dart';
@@ -52,11 +53,16 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
       body: Stack(
         children: [
           const BackgroundStyle(useRadialGradient: false),
+          const Positioned(
+            top: 20, 
+            left: 20,
+            child: BackButtonWidget(),
+          ),
           SafeArea(
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 45),
                   child: Text(
                     'You can order now',
                     style: TextStyle(

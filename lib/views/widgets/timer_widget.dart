@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class TimerWidget extends StatefulWidget {
   final int initialTime;
@@ -27,8 +29,14 @@ class _TimerWidgetState extends State<TimerWidget> {
       if (_remainingTime > 0) {
         setState(() => _remainingTime--);
       } else {
-        setState(() => _hasTimerFinished = true);
-        timer.cancel();
+        setState(() {
+          _hasTimerFinished = true;
+          timer.cancel(); // Cancela el timer cuando el tiempo se agota
+          // Llama a clearCart() aquí dentro de setState para asegurar la sincronía
+          if (context.read<CartProvider>().cartItemsList.isNotEmpty) {
+            context.read<CartProvider>().clearCart();
+          }
+        });
       }
     });
   }
@@ -41,25 +49,28 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_hasTimerFinished) {
-      return const Text(
-        'Your delivery has arrived!',
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
-        ),
-      );
-    } else {
-      int minutes = _remainingTime ~/ 60;
-      int seconds = _remainingTime % 60;
+    return Center(
+      child: _hasTimerFinished
+          ? const Text(
+            'Your delivery has arrived!',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          )
+          : Text(
+            _formatRemainingTime(),
+            style: const TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+    );
+  }
 
-      return Text(
-        '$minutes:${seconds.toString().padLeft(2, '0')}',
-        style: const TextStyle(
-          fontSize: 50,
-          fontWeight: FontWeight.bold,
-        ),
-      );
-    }
+  String _formatRemainingTime() {
+    int minutes = _remainingTime ~/ 60;
+    int seconds = _remainingTime % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
 }

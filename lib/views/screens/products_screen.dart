@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/services/product_service.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
 import 'package:frontend_delivery_app/views/screens/extras_screen.dart';
+import 'package:frontend_delivery_app/views/widgets/buttons/go_back_button.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/category_banner.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/product_card.dart';
 
@@ -55,6 +56,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
       body: Stack(
         children: [
           const BackgroundStyle(useRadialGradient: false),
+          const Positioned(
+            top: 20, 
+            left: 20,
+            child: BackButtonWidget(),
+          ),
           Positioned(
             left: screenWidth * 0.5,
             bottom: screenHeight * 0.63,

@@ -35,15 +35,12 @@ class _RegisterFormState extends State<RegisterForm> {
 
       bool result = await _authService.createUser(_email, _password);
       if (!result) {
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
-          // ignore: use_build_context_synchronously
           SnackBar(
               content: const Text('Failed to register.'),
               backgroundColor: Theme.of(context).colorScheme.error),
         );
       } else {
-        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacementNamed('/categories');
       }
     }

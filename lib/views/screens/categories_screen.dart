@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/services/category_service.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
+import 'package:frontend_delivery_app/views/widgets/buttons/go_back_button.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/category_card.dart';
 import 'package:frontend_delivery_app/views/screens/products_screen.dart';
 
@@ -13,7 +14,6 @@ class CategoriesScreen extends StatelessWidget {
 
   void handleCategoryTap(
       BuildContext context, String id, String title, String imageUrl) {
-        
     Navigator.push(
       context,
       MaterialPageRoute(

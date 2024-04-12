@@ -13,31 +13,53 @@ class SocialSignInButtons extends StatelessWidget {
       children: <Widget>[
         _buildSocialButton(
           context,
-          imagePath: 'assets/images/social_icons/google_icon.png', 
+          imagePath: 'assets/images/social_icons/google_icon.png',
           onTap: () async {
-            await GoogleAuthenticationService.signInWithGoogle();
+            bool loggedIn =
+                await GoogleAuthenticationService.signInWithGoogle();
+            if (loggedIn) {
+              Navigator.of(context).pushReplacementNamed('/categories');
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Login failed. Please try again.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
           },
         ),
         _buildSocialButton(
           context,
-          imagePath: 'assets/images/social_icons/facebook_icon.png', 
+          imagePath: 'assets/images/social_icons/facebook_icon.png',
           onTap: () async {
-           // await authService.signInWithFacebook();
+            // await authService.signInWithFacebook();
           },
         ),
-         _buildSocialButton(
+        _buildSocialButton(
           context,
-          imagePath: 'assets/images/social_icons/twitter_icon.png', 
+          imagePath: 'assets/images/social_icons/twitter_icon.png',
           onTap: () async {
             var authService = AuthenticationService();
-            await authService.signInWithTwitter();
+            bool loggedIn = await authService.signInWithTwitter();
+            if (loggedIn) {
+              Navigator.of(context).pushReplacementNamed('/categories');
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Login failed. Please try again.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
           },
         ),
       ],
     );
   }
 
-  Widget _buildSocialButton(BuildContext context, {required String imagePath, required VoidCallback onTap}) {
+  Widget _buildSocialButton(BuildContext context,
+      {required String imagePath, required VoidCallback onTap}) {
     double size = MediaQuery.of(context).size.width * 0.12;
     return GestureDetector(
       onTap: onTap,

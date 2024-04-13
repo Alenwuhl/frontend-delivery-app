@@ -4,23 +4,22 @@ class CategoryCard extends StatelessWidget {
   final String id;
   final String title;
   final String imageUrl;
-  final Function(BuildContext, String) onTap; // Corrected the onTap type here
+  final Function(BuildContext, String) onTap; 
 
   const CategoryCard({
     super.key,
     required this.id,
     required this.title,
     required this.imageUrl,
-    required this.onTap, // No need for a wrapper function here
+    required this.onTap, 
   });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final titleFontSize = screenWidth * 0.04; // 5% del ancho de la pantalla
-
+    final titleFontSize = screenWidth * 0.04; 
     return GestureDetector(
-      onTap: () => onTap(context, id), // onTap now accepts the context and id directly
+      onTap: () => onTap(context, id), 
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(

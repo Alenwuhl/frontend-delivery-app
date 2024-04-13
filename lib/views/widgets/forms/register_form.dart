@@ -6,7 +6,6 @@ class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _RegisterFormState createState() => _RegisterFormState();
 }
 

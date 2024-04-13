@@ -35,9 +35,9 @@ class ProductBanner extends StatelessWidget {
             child: Text(
               title,
               style: const TextStyle(
-                color: Colors.black, // Text color is black
-                fontWeight: FontWeight.bold, // Bold font weight
-                fontSize: 24, // Adjust the font size as needed
+                color: Colors.black, 
+                fontWeight: FontWeight.bold, 
+                fontSize: 24, 
               ),
             ),
           ),

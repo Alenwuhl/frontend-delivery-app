@@ -72,7 +72,7 @@ class ExtraCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, // Centra el contenido
+                  mainAxisAlignment: MainAxisAlignment.center, 
                   children: [
                     Text(
                       '\$$price',
@@ -81,11 +81,11 @@ class ExtraCard extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(width: 10), // Espaciado entre el precio y el icono
+                    const SizedBox(width: 10), 
                     GestureDetector(
-                      onTap: onIconTap, // Usa el callback aquí
+                      onTap: onIconTap, 
                       child: const Icon(
-                        Icons.add_box_outlined, // Icono de +
+                        Icons.add_box_outlined,
                         color: Colors.black,
                       ),
                     ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
 
-
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
   @override
@@ -25,9 +24,8 @@ class _PaymentScreenState extends State<PaymentScreen>
     );
 
     _donut1Animation = Tween<Offset>(
-      begin: const Offset(1.0, 3.0), // La dona comienza en su posición original
-      end: const Offset(
-          0.8, 0.8), // Mueve la dona de abajo derecha a arriba derecha
+      begin: const Offset(1.0, 3.0),
+      end: const Offset(0.8, 0.8),
     ).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -35,28 +33,25 @@ class _PaymentScreenState extends State<PaymentScreen>
       ),
     );
 
-_donut2Animation = Tween<Offset>(
-  begin: const Offset(-0.7, 0.0), // Empieza ligeramente fuera de la pantalla por la izquierda
-  end: const Offset(-0.3, 0.0), // Se mueve hacia la derecha pero sigue en la parte superior
-).animate(
-  CurvedAnimation(
-    parent: _animationController,
-    curve: Curves.easeInOut,
-  ),
-);
+    _donut2Animation = Tween<Offset>(
+      begin: const Offset(-0.7, 0.0),
+      end: const Offset(-0.3, 0.0),
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
 
-_donut3Animation = Tween<Offset>(
-  begin: const Offset(-1.0, 4.0), // Comienza fuera de la pantalla, abajo a la izquierda
-  end: const Offset(0.0, 4.0), // Termina mucho más abajo de la pantalla, abajo a la izquierda
-).animate(
-  CurvedAnimation(
-    parent: _animationController,
-    curve: Curves.easeInOut,
-  ),
-);
-
-
-
+    _donut3Animation = Tween<Offset>(
+      begin: const Offset(-1.0, 4.0),
+      end: const Offset(0.0, 4.0),
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
   }
 
   void _onTap() {
@@ -73,9 +68,8 @@ _donut3Animation = Tween<Offset>(
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final centralImageSize =
-        screenWidth * 0.4; // Example size, 40% of screen width
+    // final screenHeight = MediaQuery.of(context).size.height;
+    final centralImageSize = screenWidth * 0.4;
 
     return Scaffold(
       body: Stack(

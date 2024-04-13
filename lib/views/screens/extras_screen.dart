@@ -163,7 +163,7 @@ class _ExtrasScreenState extends State<ExtrasScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const CartScreen(), // Asegúrate de pasar cualquier argumento necesario aquí
+                                  const CartScreen(),
                             ),
                           );
                         }

@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:frontend_delivery_app/models/cart_model.dart';
 import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 import 'package:frontend_delivery_app/views/widgets/background.dart';
 import 'package:frontend_delivery_app/views/widgets/cards/order_summary_card.dart';
@@ -15,7 +14,7 @@ class TimerScreen extends StatelessWidget {
     final cartProvider = Provider.of<CartProvider>(context);
     final cartItems = cartProvider.cartItemsList;
     final totalAmount = cartProvider.totalAmount;
-    // Random number between 5 and 10
+    // Random number between 1 and 3 for the timer 
     int randomTimeInSeconds = (Random().nextInt(1) + 3) * 60;
 
     return Scaffold(
@@ -26,11 +25,11 @@ class TimerScreen extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                flex: 3, // Ajusta este valor para controlar la proporción
+                flex: 3, 
                 child: OrderSummaryWidget(cartItems: cartItems, totalAmount: totalAmount),
               ),
               Expanded(
-                flex: 7, // Ajusta este valor para llenar el espacio restante
+                flex: 7,
                 child: Column(
                   children: [
                     TimerWidget(initialTime: randomTimeInSeconds),

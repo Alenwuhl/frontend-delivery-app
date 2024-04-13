@@ -18,9 +18,10 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          //Background
           const BackgroundStyle(useRadialGradient: false),
           const Positioned(
-            top: 20, 
+            top: 20,
             left: 20,
             child: BackButtonWidget(),
           ),
@@ -51,8 +52,7 @@ class CartScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(top: 60,
-                    bottom: 40),
+                    padding: EdgeInsets.only(top: 60, bottom: 40),
                     child: Text(
                       "This is your order",
                       style: TextStyle(
@@ -68,16 +68,13 @@ class CartScreen extends StatelessWidget {
                         final cartItem = cartProvider.cartItemsList[index];
                         return CartItemCard(
                           cartItem: cartItem,
-                          // Añade aquí las funciones necesarias
-                          // como callbacks para onAdd y onRemove si son necesarias.
                         );
                       },
                     ),
                   ),
                   Center(
                     child: Column(
-                      mainAxisSize: MainAxisSize
-                          .min, // Esto centra el contenido de la columna verticalmente
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Consumer<CartProvider>(
                           builder: (context, cartProvider, child) {
@@ -105,13 +102,10 @@ class CartScreen extends StatelessWidget {
                                     cartProvider.totalAmount,
                                   );
                                   if (response.statusCode == 200) {
-                                    // En caso de éxito, limpiar el carrito.
-                                   // cartProvider.clearCart();
-                                    // Navegar a la pantalla de pago.
                                     Navigator.of(context)
                                         .pushReplacementNamed('/payment');
                                   } else {
-                                    // En caso de error, mostrar un mensaje.
+                                    // If you can't make the purchase:
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -132,7 +126,6 @@ class CartScreen extends StatelessWidget {
                                     );
                                   }
                                 } catch (e) {
-                                  // En caso de excepción, mostrar un mensaje.
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {

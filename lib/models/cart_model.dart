@@ -1,3 +1,4 @@
+// Model of what the cart screen needs
 class CartItem {
   final int cartItemId;
   final String productId;

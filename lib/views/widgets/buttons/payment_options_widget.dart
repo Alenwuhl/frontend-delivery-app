@@ -65,9 +65,7 @@
 //   }
 
 //   void _addToCartAndNavigate(BuildContext context, {required bool addToCart}) {
-//     print('000');
 //     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-//     print('111');
 //     cartProvider.addCartItem(
 //       CartItem(
 //         cartItemId: Random().nextInt(1000000),
@@ -80,10 +78,8 @@
 //         selectedExtrasPrices: selectedExtrasPrices,
 //       ),
 //     );
-//     print('222');
 //     if (addToCart && cartProvider.cartItemsList.isNotEmpty) {
 //       Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
 //     }
-//     print('333');
 //   }
 // }

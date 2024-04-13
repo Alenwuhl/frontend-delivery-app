@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend_delivery_app/models/cart_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -6,16 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OrderService {
   Future<http.Response> createOrder(List<CartItem> cartItems, double totalAmount) async {
     final prefs = await SharedPreferences.getInstance();
+
+    // Here we must recover the signin data
     String? userId = prefs.getString('user_id');
     String? email = prefs.getString('user_email');
-    String? token = prefs.getString('auth_token'); // Recuperar el token.
-
-    print(email);
-    print(userId);
-    print(token);
+    String? token = prefs.getString('auth_token'); 
     
     if (userId == null || email == null || token == null) {
-      throw Exception('No user ID, email, or token found in SharedPreferences');
+      throw Exception('It is not possible to make a purchase without logging in.');
     }
     
     var orderItems = cartItems.map((item) {
@@ -34,16 +33,14 @@ class OrderService {
     });
     
     var response = await http.post(
-      Uri.parse('http://192.168.68.105:3000/api/orders'),
+      Uri.parse('http://${dotenv.env['HOST']}/api/orders'),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token', // Incluir el token en los headers.
+        'Authorization': 'Bearer $token', 
       },
       body: body,
     );
-
-    print('body -' + body);
 
     return response;
   }

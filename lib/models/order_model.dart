@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 // Order for the backend
 class Order {
   final String userId;
@@ -54,7 +52,7 @@ class OrderItem {
     return {
       'productId': productId,
       'quantity': quantity,
-      'extras': extras.map((extra) => extra.toJson()).toList(), // Convertir a JSON
+      'extras': extras.map((extra) => extra.toJson()).toList(),
     };
   }
 }
@@ -62,19 +60,19 @@ class OrderItem {
 // OrderExtra for each item
 class OrderExtra {
   final String extraId;
-  final String extraTitle; // Agregar el título del extra
+  final String extraTitle;
   final double extraPrice;
 
   OrderExtra({
     required this.extraId,
-    required this.extraTitle, // Incluir el título
+    required this.extraTitle,
     required this.extraPrice,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'extraId': extraId,
-      'extraTitle': extraTitle, // Incluir el título en la representación JSON
+      'extraTitle': extraTitle,
       'extraPrice': extraPrice,
     };
   }

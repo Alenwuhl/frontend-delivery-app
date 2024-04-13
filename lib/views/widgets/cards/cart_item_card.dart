@@ -5,16 +5,12 @@ import 'package:frontend_delivery_app/services/Cart/cart_provider.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem cartItem;
-  //final VoidCallback onAdd; // Callback para incrementar la cantidad
-  // final VoidCallback onRemove; // Callback para decrementar la cantidad
-  final int quantity; // La cantidad actual del producto
+  final int quantity;
 
   const CartItemCard({
     super.key,
     required this.cartItem,
-    //required this.onAdd,
-    //required this.onRemove,
-    this.quantity = 1, // Cantidad inicial, asumiremos 1 para el ejemplo
+    this.quantity = 1,
   });
 
   @override
@@ -70,12 +66,11 @@ class CartItemCard extends StatelessWidget {
                     cartProvider.modifyCartItemQuantity(cartItem.cartItemId, 1);
                   },
                 ),
-                Text('${cartItem.quantity}'), // Muestra la cantidad actual
+                Text('${cartItem.quantity}'),
                 IconButton(
                   icon: const Icon(Icons.remove, color: Colors.red),
                   onPressed: () {
                     if (cartItem.quantity > 1) {
-                      // Asegurarse de que no puedes tener menos de 1
                       cartProvider.modifyCartItemQuantity(
                           cartItem.cartItemId, -1);
                     }

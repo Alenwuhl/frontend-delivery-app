@@ -12,11 +12,11 @@ class ProductsScreen extends StatefulWidget {
   final String categoryTitle;
 
   const ProductsScreen({
-    Key? key,
+    super.key,
     required this.categoryId,
     required this.categoryImageUrl,
     required this.categoryTitle,
-  }) : super(key: key);
+  });
 
   @override
   _ProductsScreenState createState() => _ProductsScreenState();
@@ -48,7 +48,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get the screen width and height for responsive design
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -57,7 +56,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         children: [
           const BackgroundStyle(useRadialGradient: false),
           const Positioned(
-            top: 20, 
+            top: 20,
             left: 20,
             child: BackButtonWidget(),
           ),
@@ -102,7 +101,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   child: CategoryBanner(
                     imageUrl: widget.categoryImageUrl,
                     title: widget.categoryTitle,
-                    height: screenHeight * 0.25, // Adjust the height as needed
+                    height: screenHeight * 0.25,
                   ),
                 ),
 
@@ -125,8 +124,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: screenWidth * 0.03,
                             mainAxisSpacing: screenHeight * 0.02,
-                            childAspectRatio:
-                                0.7, // Adjust to fit the product cards properly
+                            childAspectRatio: 0.7,
                           ),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
@@ -138,8 +136,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   title: product['title'],
                                   price: product['price'],
                                   onTap: () => handleProductTap(
-                                    product[
-                                        'id'], // Assuming 'id' is the key for productId in your data model
+                                    product['id'],
                                     product['imageUrl'],
                                     product['title'],
                                     product['price'],
@@ -149,7 +146,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         );
                       } else {
                         return const Center(
-                            child: Text('No products found for this category'));
+                            child: Text(
+                          'No products found for this category',
+                          style: TextStyle(fontSize: 20),
+                        ));
                       }
                     },
                   ),

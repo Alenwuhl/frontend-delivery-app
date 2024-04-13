@@ -31,8 +31,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       } else {
         setState(() {
           _hasTimerFinished = true;
-          timer.cancel(); // Cancela el timer cuando el tiempo se agota
-          // Llama a clearCart() aquí dentro de setState para asegurar la sincronía
+          timer.cancel();
           if (context.read<CartProvider>().cartItemsList.isNotEmpty) {
             context.read<CartProvider>().clearCart();
           }

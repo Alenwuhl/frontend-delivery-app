@@ -4,7 +4,7 @@ import 'dart:convert';
 
 //Get all categories
 class CategoryService {
-  static String baseUrl = 'http://${dotenv.env['HOST']}/api/categories/';
+  static String baseUrl = '${dotenv.env['HOST']}/api/categories/';
 
   Future<List<dynamic>>? getCategories() async {
     var response = await http.get(Uri.parse(baseUrl));

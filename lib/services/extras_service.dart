@@ -4,13 +4,15 @@ import 'dart:convert';
 
 //Get all products for a specific category
 class ExtrasService {
-  static String? baseApiUrl = dotenv.env['HOST'];
-  static const String baseApiPath = '/api/products';
+  //static String? baseApiUrl = dotenv.env['HOST'];
+  //static const String baseApiPath = '/api/products';
 
   //getExtrasProduct brings the extras associated with each product
   Future<List<dynamic>> getExtrasProduct(String productId) async {
-    var url = Uri.http(baseApiUrl!, '$baseApiPath/$productId/extras');
-    var response = await http.get(url);
+    //var url = Uri.http(baseApiUrl!, '$baseApiPath/$productId/extras');
+    String baseUrl = '${dotenv.env['HOST']}/api/products/$productId/extras';
+    print(baseUrl);
+    var response = await http.get(Uri.parse(baseUrl));
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
 

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       create: (context) => CartProvider(),
       child: const MaterialApp(
         title: 'Futuristic delivery App',
-        initialRoute: '/categories',
+        initialRoute: '/',
         onGenerateRoute: generateRoute,
       ),
     );

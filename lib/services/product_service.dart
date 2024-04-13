@@ -4,13 +4,17 @@ import 'dart:convert';
 
 //Get all products for a specific category
 class ProductService {
-  static String? baseApiUrl = dotenv.env['HOST'];
-  static const String baseApiPath = '/api/products';
+  
+  //static String? baseApiUrl = dotenv.env['HOST'];
+  //static const String baseApiPath = '/api/products';
 
-  Future<List<dynamic>> getProductsByCategory(String categoryId) async {
-    var url = Uri.http(baseApiUrl!, '$baseApiPath/$categoryId/category');
+  Future<List<dynamic>>? getProductsByCategory(String categoryId) async {
+     String baseUrl = '${dotenv.env['HOST']}/api/products/$categoryId/category';
+    //var url = Uri.http(dotenv.env['HOST']!, '$baseApiPath/$categoryId/category');
 
-    var response = await http.get(url);
+    var response = await http.get(Uri.parse(baseUrl));
+    print('baseUrl' + baseUrl);
+    print(response);
 
     if (response.statusCode == 200) {
       return json.decode(response.body);

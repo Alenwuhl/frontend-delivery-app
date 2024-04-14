@@ -24,7 +24,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     );
 
     _donut1Animation = Tween<Offset>(
-      begin: const Offset(1.0, 3.0),
+      begin: const Offset(1.0, 2.0),
       end: const Offset(0.8, 0.8),
     ).animate(
       CurvedAnimation(
@@ -68,59 +68,51 @@ class _PaymentScreenState extends State<PaymentScreen>
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // final screenHeight = MediaQuery.of(context).size.height;
     final centralImageSize = screenWidth * 0.4;
 
     return Scaffold(
       body: Stack(
         children: [
           const BackgroundStyle(useRadialGradient: true),
-          SlideTransition(
-            position: _donut1Animation,
-            child: Positioned(
-              top: 0,
-              right: 0,
-              child: Image.asset('assets/images/background_images/donut.png'),
-            ),
-          ),
-          SlideTransition(
-            position: _donut2Animation,
-            child: Positioned(
-              left: 0,
-              top: 0,
-              child: Image.asset('assets/images/background_images/0_donut.png'),
-            ),
-          ),
-          SlideTransition(
-            position: _donut3Animation,
-            child: Positioned(
-              left: 0,
-              bottom: 0,
-              child: Image.asset('assets/images/background_images/x_donut.png'),
-            ),
-          ),
-          GestureDetector(
-            onTap: _onTap,
-            child: Center(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
-                child: _imageTappedOnce
-                    ? Image.asset(
-                        'assets/images/payment_images/payment_2.png',
-                        key: const ValueKey('payment2'),
-                        width: centralImageSize,
-                        height: centralImageSize,
-                      )
-                    : Image.asset(
-                        'assets/images/payment_images/payment_1.png',
-                        key: const ValueKey('payment1'),
-                        width: centralImageSize,
-                        height: centralImageSize,
-                      ),
-              ),
-            ),
-          ),
+          buildSlideTransition(_donut1Animation, 'assets/images/background_images/donut.png', Alignment.topRight),
+          buildSlideTransition(_donut2Animation, 'assets/images/background_images/0_donut.png', Alignment.topLeft),
+          buildSlideTransition(_donut3Animation, 'assets/images/background_images/x_donut.png', Alignment.bottomLeft),
+          buildCenterImageGestureDetector(centralImageSize),
         ],
+      ),
+    );
+  }
+
+  SlideTransition buildSlideTransition(Animation<Offset> animation, String imagePath, AlignmentGeometry alignment) {
+    return SlideTransition(
+      position: animation,
+      child: Align(
+        alignment: alignment,
+        child: Image.asset(imagePath),
+      ),
+    );
+  }
+
+  GestureDetector buildCenterImageGestureDetector(double imageSize) {
+    return GestureDetector(
+      onTap: _onTap,
+      child: Center(
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: _imageTappedOnce
+              ? Image.asset(
+                  'assets/images/payment_images/payment_2.png',
+                  key: const ValueKey('payment2'),
+                  width: imageSize,
+                  height: imageSize,
+                )
+              : Image.asset(
+                  'assets/images/payment_images/payment_1.png',
+                  key: const ValueKey('payment1'),
+                  width: imageSize,
+                  height: imageSize,
+                ),
+        ),
       ),
     );
   }

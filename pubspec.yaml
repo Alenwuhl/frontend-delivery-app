@@ -69,6 +69,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/.env
     - assets/images/social_icons/facebook_icon.png
     - assets/images/social_icons/google_icon.png
     - assets/images/social_icons/twitter_icon.png

@@ -1,15 +1,12 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 // For Google sign-in
 import 'package:google_sign_in/google_sign_in.dart';
 // For Facebook sign-in
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-// For X sign-in
-import 'package:twitter_login/entity/auth_result.dart';
-import 'package:twitter_login/twitter_login.dart';
+
+
+import 'package:flutter/foundation.dart';
 
 
 class AuthenticationService {
@@ -103,93 +100,19 @@ class AuthenticationService {
     await prefs.remove('user_id');
   }
 
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
+
   // Method to sign in with Twitter
-  Future<bool> signInWithTwitter() async {
-  try {
-    final TwitterLogin twitterLogin = TwitterLogin(
-      apiKey: 'SDRCnttcSDQgqzGbgEOCRELIC',
-      apiSecretKey: 'ZaO8RBCLOsSx6qJXvyfHBrUl3nHEhyJew7pKbhSqVA7TRoJoz7',
-      redirectURI: 'https:futuristic-delivery-app.firebaseapp.com/__/auth/handler', 
-    );
+Future<bool> signInWithTwitter() async {
+  TwitterAuthProvider twitterProvider = TwitterAuthProvider();
 
-    final AuthResult authResult = await twitterLogin.loginV2();
-    if (authResult.status == TwitterLoginStatus.loggedIn) {
-      final response = await http.post(
-        Uri.parse('https://tu-dominio.com/auth/twitter'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'token': authResult.authToken,
-          'tokenSecret': authResult.authTokenSecret,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        // Maneja la respuesta de tu backend
-        // Por ejemplo, guarda el token de sesión personalizado
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  } catch (e) {
+  if (kIsWeb) {
+    await FirebaseAuth.instance.signInWithPopup(twitterProvider);
+    return true;
+  } else {
+    await FirebaseAuth.instance.signInWithProvider(twitterProvider);
     return false;
   }
 }
-  // Future<bool> signInWithTwitter() async {
-  //   try {
-  //     final TwitterLogin twitterLogin = TwitterLogin(
-  //         apiKey: 'hPvSInVdAWGnRgg7h3Ph0OMju',
-  //         apiSecretKey: 'G8yQ6gWKaW0EH4zEzjSMaoHP1lqitwfV0hkJgzAXNYGB02gEML',
-  //         redirectURI:
-  //             'socialAuth://' //'https://futuristic-delivery-app.firebaseapp.com/__/auth/handler'
-  //         );
-
-  //     final AuthResult authResult = await twitterLogin.loginV2();
-  //     if (authResult.status == TwitterLoginStatus.loggedIn) {
-  //       try {
-  //         final AuthCredential credential = TwitterAuthProvider.credential(
-  //           accessToken: authResult.authToken!,
-  //           secret: authResult.authTokenSecret!,
-  //         );
-  //         await _firebaseAuth.signInWithCredential(credential);
-  //         return true;
-  //       } catch (e) {
-  //         print("este try");
-  //         print(e);
-  //       }
-  //     } else {
-  //       print(authResult.status);
-  //     }
-      // switch (authResult.status) {
-      //               case TwitterLoginStatus.loggedIn:
-      //                 print('1');
-      //                 break;
-      //               case TwitterLoginStatus.cancelledByUser:
-      //               print('2');
-      //                 // cancel
-      //                 break;
-      //               case TwitterLoginStatus.error:
-      //               print('3');
-      //                 // error
-      //                 break;
-      //               default:
-      //               print('4');
-      //             }
-
-  //     return false;
-  //   } catch (e) {
-  //     print('Error signing in with Twitter: $e');
-  //     return false;
-  //   }
-  // }
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
 
   // Method to sign out
   Future<void> socialSignOut() async {

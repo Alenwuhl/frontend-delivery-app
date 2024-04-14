@@ -1,8 +1,8 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend_delivery_app/models/cart_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+const baseUrl = 'https://futuristic-delivery-app-9z0i.onrender.com/api/orders';
 
 class OrderService {
   Future<http.Response> createOrder(List<CartItem> cartItems, double totalAmount) async {
@@ -33,7 +33,8 @@ class OrderService {
     });
     
     var response = await http.post(
-      Uri.parse('${dotenv.env['HOST']}/api/orders'),
+      //Uri.parse('${dotenv.env['HOST']}/api/orders'),
+      Uri.parse(baseUrl),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

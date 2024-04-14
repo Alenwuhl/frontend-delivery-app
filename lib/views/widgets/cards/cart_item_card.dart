@@ -48,11 +48,19 @@ class CartItemCard extends StatelessWidget {
                     ),
                   ),
                   Wrap(
+                    spacing: 5.0, 
                     children: cartItem.selectedExtrasTitles
-                        .map((title) => Text(
-                              title,
-                              style: const TextStyle(fontSize: 12.0),
+                        .asMap()
+                        .map((i, title) => MapEntry(
+                              i,
+                              Text(
+                                i < cartItem.selectedExtrasTitles.length - 1
+                                    ? '$title, '
+                                    : title, 
+                                style: const TextStyle(fontSize: 12.0),
+                              ),
                             ))
+                        .values
                         .toList(),
                   ),
                 ],

@@ -14,8 +14,8 @@ class ProductBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final bannerHeight = height ?? screenWidth * 0.5;
+    //final screenWidth = MediaQuery.of(context).size.width;
+    final bannerHeight = height;
 
     return Container(
       height: bannerHeight,

@@ -1,17 +1,15 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 //Get all products for a specific category
 class ExtrasService {
-  //static String? baseApiUrl = dotenv.env['HOST'];
-  //static const String baseApiPath = '/api/products';
 
   //getExtrasProduct brings the extras associated with each product
   Future<List<dynamic>> getExtrasProduct(String productId) async {
     //var url = Uri.http(baseApiUrl!, '$baseApiPath/$productId/extras');
-    String baseUrl = '${dotenv.env['HOST']}/api/products/$productId/extras';
-    print(baseUrl);
+    String baseUrl = 'https://futuristic-delivery-app-9z0i.onrender.com/api/products/$productId/extras'; // '${dotenv.env['HOST']}/api/products/$productId/extras';
+    
     var response = await http.get(Uri.parse(baseUrl));
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);

@@ -33,7 +33,6 @@ class OrderService {
     });
     
     var response = await http.post(
-      //Uri.parse('${dotenv.env['HOST']}/api/orders'),
       Uri.parse(baseUrl),
       headers: {
         'Content-Type': 'application/json',

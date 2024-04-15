@@ -7,9 +7,8 @@ import 'package:frontend_delivery_app/views/screens/products_screen.dart';
 class CategoriesScreen extends StatelessWidget {
   final CategoryService categoryService;
 
-  CategoriesScreen({Key? key})
-      : categoryService = CategoryService(),
-        super(key: key);
+  CategoriesScreen({super.key})
+      : categoryService = CategoryService();
 
   void handleCategoryTap(
       BuildContext context, String id, String title, String imageUrl) {

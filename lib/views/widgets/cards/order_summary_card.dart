@@ -81,7 +81,7 @@ class OrderSummaryWidget extends StatelessWidget {
               },
             ),
           ),
-          Divider(color: Color.fromARGB(255, 255, 255, 255)),
+          const Divider(color: Color.fromARGB(255, 255, 255, 255)),
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(

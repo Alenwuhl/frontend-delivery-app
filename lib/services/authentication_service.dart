@@ -101,18 +101,33 @@ class AuthenticationService {
   }
 
 
-  // Method to sign in with Twitter
+// Method to sign in with Twitter
 Future<bool> signInWithTwitter() async {
   TwitterAuthProvider twitterProvider = TwitterAuthProvider();
 
-  if (kIsWeb) {
-    await FirebaseAuth.instance.signInWithPopup(twitterProvider);
+  try {
+    UserCredential userCredential;
+    if (kIsWeb) {
+      userCredential = await FirebaseAuth.instance.signInWithPopup(twitterProvider);
+    } else {
+      userCredential = await FirebaseAuth.instance.signInWithProvider(twitterProvider);
+    }
+
+    // Extract token, email, and userID
+    String? token = await userCredential.user?.getIdToken();
+    String? email = userCredential.user?.email;
+    String? userId = userCredential.user?.uid;
+
+    // Save user information for future use
+    if (token != null && email != null && userId != null) {
+      await _saveUserData(email, token, userId);
+    }
     return true;
-  } else {
-    await FirebaseAuth.instance.signInWithProvider(twitterProvider);
+  } catch (e) {
     return false;
   }
 }
+
 
   // Method to sign out
   Future<void> socialSignOut() async {

@@ -7,8 +7,7 @@ class ExtrasService {
 
   //getExtrasProduct brings the extras associated with each product
   Future<List<dynamic>> getExtrasProduct(String productId) async {
-    //var url = Uri.http(baseApiUrl!, '$baseApiPath/$productId/extras');
-    String baseUrl = 'https://futuristic-delivery-app-9z0i.onrender.com/api/products/$productId/extras'; // '${dotenv.env['HOST']}/api/products/$productId/extras';
+    String baseUrl = 'https://futuristic-delivery-app-9z0i.onrender.com/api/products/$productId/extras'; 
     
     var response = await http.get(Uri.parse(baseUrl));
     if (response.statusCode == 200) {
